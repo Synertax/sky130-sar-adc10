@@ -1,4 +1,4 @@
-#:10-bit 25 MS/s asynchronous SAR ADC in SkyWater sky130A
+# sar10_adc: 10-bit 25 MS/s asynchronous SAR ADC in SkyWater sky130A
 
 A 10-bit, 25 MS/s, fully differential asynchronous SAR ADC designed with open-source tools
 (xschem, ngspice, Magic, KLayout, Netgen, OpenROAD) on the sky130A 130 nm process at 1.8 V.
