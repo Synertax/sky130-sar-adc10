@@ -1,0 +1,42 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+}
+V {}
+S {}
+F {}
+E {}
+L 4 -180 -80 180 -80 {}
+L 4 180 -80 180 80 {}
+L 4 180 80 -180 80 {}
+L 4 -180 80 -180 -80 {}
+L 4 -200 0 -180 0 {}
+T {DH} -174 -6 0 0 0.18 0.18 {}
+L 4 -200 20 -180 20 {}
+T {DL} -174 14 0 0 0.18 0.18 {}
+L 4 0 -100 0 -80 {}
+T {TOP} 0 -76 0 0 0.18 0.18 {hcenter=true}
+L 4 -120 100 -120 80 {}
+T {VDD} -120 62 0 0 0.18 0.18 {hcenter=true}
+L 4 -40 100 -40 80 {}
+T {VREFP} -40 62 0 0 0.18 0.18 {hcenter=true}
+L 4 40 100 40 80 {}
+T {VREFN} 40 62 0 0 0.18 0.18 {hcenter=true}
+L 4 120 100 120 80 {}
+T {VSS} 120 62 0 0 0.18 0.18 {hcenter=true}
+T {@name} -180 -122 0 0 0.25 0.25 {}
+L 4 -16 -6 16 -6 {}
+L 4 -16 6 16 6 {}
+L 4 0 -6 0 -22 {}
+L 4 0 6 0 22 {}
+T {@symname} 0 30 0 0 0.2 0.2 {hcenter=true}
+T {2 x 128 C} 0 -44 0 0 0.2 0.2 {hcenter=true}
+B 5 -202.5 -2.5 -197.5 2.5 {name=DH dir=in}
+B 5 -202.5 17.5 -197.5 22.5 {name=DL dir=in}
+B 5 -2.5 -102.5 2.5 -97.5 {name=TOP dir=inout}
+B 5 -122.5 97.5 -117.5 102.5 {name=VDD dir=inout}
+B 5 -42.5 97.5 -37.5 102.5 {name=VREFP dir=inout}
+B 5 37.5 97.5 42.5 102.5 {name=VREFN dir=inout}
+B 5 117.5 97.5 122.5 102.5 {name=VSS dir=inout}

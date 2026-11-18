@@ -1,0 +1,16 @@
+{
+  "_comment": "pass limits checked by gen/run.py after every run (post-layout, typical corner, 25 MS/s, 1.4 V amplitude)",
+  "schematic_match": true,
+  "unrouted_max": 0,
+  "drc_magic_max": 0,
+  "drc_klayout_max": 0,
+  "lvs_match": true,
+  "quick_missing_eoc_max": 0,
+  "quick_tconv_max_ns": 17.5,
+  "quick_inl_max_lsb": 2.0,
+  "enob_min": 9.5,
+  "tconv_max_ns": 17.5,
+  "missing_eoc_max": 0,
+  "power_max_uw": 450,
+  "goal_tconv_ns": 14.5
+}

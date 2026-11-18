@@ -1,0 +1,6 @@
+FFT  N=64 M=13 fs=2.2e+07 Hz fin=4.469e+06 Hz corner=ss temp=125 vdd=1.62 amp=1.40 Vpk-diff  (wall 1277 s)
+code range 38..986  signal -0.66 dBFS
+SNDR 56.56 dB  ENOB 9.103 bit  SFDR 60.62 dB  THD -60.40 dB
+conversion time max 32.86 ns  mean 32.17 ns  (available 36.36 ns)
+power: VDD 258.3 uW + VREF 58.1 uW = 316.4 uW   energy/conv 14.38 pJ   FoM_W 26.16 fJ/conv-step
+missing EOC: 0
