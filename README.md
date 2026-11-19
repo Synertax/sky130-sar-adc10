@@ -173,3 +173,7 @@ python3 gen/flow.py fft --out sim/fft --N 64 --M 13 --fs 25e6 --amp 1.4 --acc hi
 ```
 
 Scripts expect the design at `/foss/designs/Analog/SAR_ADC10`; adjust the paths in `gen/run.py` and `layout/gen/*.py` otherwise.
+
+## License
+
+Copyright 2026 Synertax. Licensed under the [Apache License 2.0](LICENSE), the same license as the SkyWater sky130 PDK.
