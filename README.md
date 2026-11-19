@@ -37,6 +37,70 @@ Every number below is **post-layout** (capacitance-extracted layout netlist), si
 
 A 64-point FFT tests only 64 code positions: differences under about 0.2 bit between runs are within its spread.
 
+## Corners (post-layout, 25 MS/s, fin = 5.08 MHz, 6 ns sampling, 34 ns conversion window)
+
+| Corner | SNDR | ENOB | SFDR | THD | Worst conversion | Output bits valid | Power |
+|---|---|---|---|---|---|---|---|
+| tt 27°C 1.8V | 59.4 dB | 9.58 | 68.0 dB | -71.0 dB | 15.39 ns | 15.76 ns | 433 µW |
+| tt -40°C | 58.9 dB | 9.48 | 66.5 dB | -69.1 dB | 16.66 ns | 16.99 ns | 425 µW |
+| tt 125°C | 59.2 dB | 9.55 | 68.3 dB | -72.4 dB | 15.22 ns | 15.56 ns | 453 µW |
+| fs 27°C | 57.2 dB | 9.21 | 62.8 dB | -61.8 dB | 19.53 ns | 19.88 ns | 426 µW |
+| sf 27°C | 50.3 dB | 8.06 | 58.7 dB | -58.0 dB | 15.10 ns | 15.53 ns | 437 µW |
+| ff -40°C 1.98V | 52.2 dB | 8.38 | 59.5 dB | -62.9 dB | 8.48 ns | 8.69 ns | 517 µW |
+| ss 125°C 1.62V | 56.7 dB | 9.13 | 60.6 dB | -60.4 dB | 32.83 ns | 33.55 ns | 360 µW |
+
+![ENOB and SFDR per corner](images/corners/fft_enob_sfdr.png)
+
+![Spectra per corner](images/corners/fft_spectra.png)
+
+Typical, temperature and slow corners keep at least 9.1 bit. Two corners lose more than one bit through
+harmonic distortion (SFDR below 60 dB): **sf** (slow NMOS, fast PMOS) at 8.06 bit and **ff at −40 °C, 1.98 V**
+at 8.38 bit. Both have fast PMOS; the cause (sampling switch or CDAC switches) is not yet isolated.
+
+### PVT sweep (19 corners, 8 DC inputs each)
+
+Each corner converts 8 DC inputs across the range; "worst nonlinearity" is the deviation from a straight-line fit
+with quantisation removed.
+
+| Corner | Worst nonlinearity | rms | Worst conversion | Output bits valid | Power | Unfinished |
+|---|---|---|---|---|---|---|
+| tt -40 °C 1.8 V | 0.165 LSB | 0.086 LSB | 16.33 ns | 16.71 ns | 425 µW | 0 |
+| tt 27 °C 1.62 V | 0.207 LSB | 0.099 LSB | 23.17 ns | 23.31 ns | 346 µW | 0 |
+| tt 27 °C 1.8 V | 0.214 LSB | 0.104 LSB | 15.39 ns | 15.76 ns | 433 µW | 0 |
+| tt 27 °C 1.98 V | 0.220 LSB | 0.107 LSB | 11.96 ns | 12.26 ns | 532 µW | 0 |
+| tt 125 °C 1.8 V | 0.215 LSB | 0.104 LSB | 14.98 ns | 15.34 ns | 453 µW | 0 |
+| ss -40 °C 1.8 V | 0.199 LSB | 0.095 LSB | 28.12 ns | 28.70 ns | 430 µW | 0 |
+| ss 27 °C 1.8 V | 0.207 LSB | 0.099 LSB | 24.86 ns | 25.43 ns | 438 µW | 0 |
+| ss 125 °C 1.62 V | 0.207 LSB | 0.108 LSB | 32.47 ns | 33.14 ns | 360 µW | 0 |
+| ss 125 °C 1.8 V | 0.176 LSB | 0.093 LSB | 23.21 ns | 23.73 ns | 451 µW | 0 |
+| ff -40 °C 1.8 V | 0.173 LSB | 0.091 LSB | 10.63 ns | 10.90 ns | 421 µW | 0 |
+| ff -40 °C 1.98 V | 0.232 LSB | 0.119 LSB | 8.41 ns | 8.60 ns | 518 µW | 0 |
+| ff 27 °C 1.8 V | 0.173 LSB | 0.092 LSB | 10.43 ns | 10.69 ns | 433 µW | 0 |
+| ff 125 °C 1.8 V | 0.213 LSB | 0.103 LSB | 10.52 ns | 10.77 ns | 477 µW | 0 |
+| fs -40 °C 1.8 V | 0.223 LSB | 0.105 LSB | 22.40 ns | 22.75 ns | 415 µW | 0 |
+| fs 27 °C 1.8 V | 0.177 LSB | 0.094 LSB | 19.17 ns | 19.50 ns | 426 µW | 0 |
+| fs 125 °C 1.8 V | **151.121 (failed)** LSB | 71.022 LSB | 18.12 ns | 18.47 ns | 535 µW | **2 of 8** |
+| sf -40 °C 1.8 V | 0.235 LSB | 0.110 LSB | 15.42 ns | 15.86 ns | 430 µW | 0 |
+| sf 27 °C 1.8 V | 0.238 LSB | 0.114 LSB | 14.92 ns | 15.34 ns | 439 µW | 0 |
+| sf 125 °C 1.8 V | 0.199 LSB | 0.108 LSB | 14.95 ns | 15.32 ns | 457 µW | 0 |
+
+![PVT sweep](images/corners/pvt_sweep.png)
+
+All corners finish within the 34 ns window with at most 0.24 LSB nonlinearity, **except fs (fast NMOS, slow PMOS) at
+125 °C, 1.8 V**: 2 of 8 conversions never finished (no end-of-conversion), which corrupts the codes. This is a
+functional failure of the self-timed loop at that corner and is under investigation.
+
+## Linearity
+
+![Static nonlinearity](images/corners/static_nonlinearity.png)
+
+Typical corner, 120 DC inputs over ±1.4 V: max 0.24 LSB, rms 0.12 LSB, dominated by a 3rd-order term (0.07 LSB).
+
+![Model INL/DNL](images/corners/model_inl_dnl.png)
+
+INL/DNL computed from the extracted CDAC bit weights alone (P side; comparator offset and noise not included):
+DNL −0.06/+0.48 LSB, best-fit INL ±0.30 LSB. The largest DNL step is at the MSB transition.
+
 ## Architecture
 
 | Block | Implementation |
@@ -48,7 +112,7 @@ A 64-point FFT tests only 64 code positions: differences under about 0.2 bit bet
 | SAR logic | 10 slices of sky130_fd_sc_hd cells: AOI/NOR latch per side, token ripple, CDAC pre-drivers next to each latch, output flip-flops clocked by EOC |
 | EOC | Driven from the last bit's decision (buf_4); slice reset released directly from the sampling clock |
 
-Schematics (generated, also as xschem `.sch` files in `xschem/`):
+Schematics (exported from xschem; SVG versions in `images/schematic/`, sources in `xschem/`):
 
 | Top level | Comparator | Bit slice |
 |---|---|---|
@@ -57,6 +121,10 @@ Schematics (generated, also as xschem `.sch` files in `xschem/`):
 | Timing control | Bootstrapped switch | CDAC bit cell |
 |---|---|---|
 | ![ctrl](images/schematic/sar10_ctrl.png) | ![boot](images/schematic/sar10_boot.png) | ![dac](images/schematic/sar10_dac128.png) |
+
+| Testbench |
+|---|
+| ![tb](images/schematic/tb_sar10.png) |
 
 ## Design history (post-layout, typical corner, 25 MS/s)
 
@@ -74,7 +142,8 @@ v11a is the first version whose slow-corner conversion fits a 25 MS/s period.
 
 - Extraction is capacitance only: wire and via resistance (reference IR drop, RC settling) is not modelled.
 - Ideal VREFP/VREFN supplies and an ideal 50 Ω differential source: no reference buffer, input driver or IO pads.
-- No noise or Monte Carlo mismatch simulation yet; fast-corner and temperature-sweep results are being added.
+- No noise or Monte Carlo mismatch simulation yet.
+- sf and ff (−40 °C, 1.98 V) corners lose more than 1 bit to distortion; fs at 125 °C, 1.8 V fails (unfinished conversions). See Corners.
 - Results are from a 64-point FFT (see note above).
 
 ## Repository layout
