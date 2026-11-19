@@ -112,19 +112,19 @@ DNL −0.06/+0.48 LSB, best-fit INL ±0.30 LSB. The largest DNL step is at the M
 | SAR logic | 10 slices of sky130_fd_sc_hd cells: AOI/NOR latch per side, token ripple, CDAC pre-drivers next to each latch, output flip-flops clocked by EOC |
 | EOC | Driven from the last bit's decision (buf_4); slice reset released directly from the sampling clock |
 
-Schematics (exported from xschem; SVG versions in `images/schematic/`, sources in `xschem/`):
+Schematics (exported from xschem as SVG; sources in `xschem/`):
 
 | Top level | Comparator | Bit slice |
 |---|---|---|
-| ![top](images/schematic/sar10_adc.png) | ![comp](images/schematic/sar10_comp.png) | ![slice](images/schematic/sar10_slice.png) |
+| ![top](images/schematic/sar10_adc.svg) | ![comp](images/schematic/sar10_comp.svg) | ![slice](images/schematic/sar10_slice.svg) |
 
 | Timing control | Bootstrapped switch | CDAC bit cell |
 |---|---|---|
-| ![ctrl](images/schematic/sar10_ctrl.png) | ![boot](images/schematic/sar10_boot.png) | ![dac](images/schematic/sar10_dac128.png) |
+| ![ctrl](images/schematic/sar10_ctrl.svg) | ![boot](images/schematic/sar10_boot.svg) | ![dac](images/schematic/sar10_dac128.svg) |
 
 | Testbench |
 |---|
-| ![tb](images/schematic/tb_sar10.png) |
+| ![tb](images/schematic/tb_sar10.svg) |
 
 ## Design history (post-layout, typical corner, 25 MS/s)
 
